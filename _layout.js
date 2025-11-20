@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import AgregarClienteScreen from "./app/agregar-cliente";
 import AgregarEquipoScreen from "./app/agregar-equipo";
+import AgregarMaterialScreen from "./app/agregar-material";
 import HomeScreen from "./app/index";
 
 
@@ -17,7 +18,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="AgregarEquipo" component={AgregarEquipoScreen} />
         <Stack.Screen name="AgregarCliente" component={AgregarClienteScreen} />
-          <Stack.Screen name="AgregarMaterial" component={AgregarMaterilScreen} />
+        <Stack.Screen name="AgregarMaterial" component={AgregarMaterialScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
