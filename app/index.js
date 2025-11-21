@@ -9,7 +9,7 @@ export default function HomeScreen() {
 
     const routes = [
         { name: "Nuevo Reporte", icon: "clipboard-text", path: "/nuevo-reporte", iconSource: "mci" },
-        { name: "Agregar un cliente", icon: "person-add-sharp", path: "/agregar-cliente", iconSource: "ionic" },
+        { name: "Clientes", icon: "person", path: "/customers", iconSource: "ionic" },
         { name: "Agregar equipo", icon: "users", path: "/agregar-equipo", iconSource: "fa5" },
         { name: "Agregar material", icon: "file-document-edit", path: "/agregar-material", iconSource: "mci" },
     ];
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        paddingTop: 60,
+        paddingTop: 70,
         overflow: "hidden",
         backgroundColor: "#fefefe:",
     },
@@ -54,6 +54,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.025,
         shadowRadius: 1.1,
         shadowOffset: { width: 4, height: 4 },
+        borderColor: "#d1eefa",
+        borderWidth: 1,
         elevation: 4,
     },
     icon: {
