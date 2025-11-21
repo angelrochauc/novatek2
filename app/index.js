@@ -1,7 +1,9 @@
 import { FontAwesome5, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, Pressable, StatusBar, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
+const { width } = Dimensions.get("window");
 export default function HomeScreen() {
     const router = useRouter();
 
@@ -13,7 +15,8 @@ export default function HomeScreen() {
     ];
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+            <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
             <View style={styles.logoCard}>
                 <Image source={require("../assets/logo3.png")} style={styles.logoImage} resizeMode="contain" />
             </View>
@@ -26,7 +29,7 @@ export default function HomeScreen() {
                 </Pressable>
             ))}
             <Text style={styles.footerText}>Desarrollado por HOD | {new Date().getFullYear()}</Text>
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -36,12 +39,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 60,
         overflow: "hidden",
+        backgroundColor: "#fefefe:",
     },
 
     logoCard: {
         width: "85%",
         height: 90,
-        backgroundColor: "#d7f4ffa1",
+        backgroundColor: "#E6F8FF",
         borderRadius: 12,
         marginBottom: 30,
         justifyContent: "center",
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
     cardButton: {
         width: "75%",
         height: 52,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "#fdfeff",
         borderRadius: 12,
         marginBottom: 19,
         shadowColor: "#000",
@@ -75,23 +79,22 @@ const styles = StyleSheet.create({
     },
 
     cardButton__inner: {
-        display: "grid",
-        gridTemplateColumns: "1fr 2fr",
-        height: "100%",
-        alignContent: "center",
+        flexDirection: "row",
         alignItems: "center",
+        height: "100%",
+        justifyContent: "center",
     },
 
     cardButton__icon: {
-        textAlign: "end",
-        color: "#186ddb9c",
+        color: "#0D47A150",
     },
 
     cardButton__text: {
-        fontSize: 18,
+        fontSize: width * 0.04,
+        // fontSize: 19,
         marginLeft: 10,
         color: "#0D47A1",
-        fontWeight: "600",
+        fontWeight: "500",
     },
     footerText: {
         position: "absolute",
