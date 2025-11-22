@@ -206,6 +206,13 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         zIndex: 10,
     },
+    title: {
+        marginLeft: 20,
+        fontSize: 19,
+        textAlign: "center",
+        color: "#fefefe",
+        fontWeight: "600",
+    },
 
     CustomerItem: {
         padding: 15,
@@ -215,20 +222,6 @@ const styles = StyleSheet.create({
 
     backButton: {
         padding: 5,
-    },
-
-    logo: {
-        width: 400,
-        height: 120,
-        resizeMode: "contain",
-    },
-
-    title: {
-        marginLeft: 20,
-        fontSize: 19,
-        textAlign: "center",
-        color: "#fefefe",
-        fontWeight: "600",
     },
 
     input: {

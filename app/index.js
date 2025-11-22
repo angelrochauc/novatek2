@@ -1,4 +1,4 @@
-import { FontAwesome5, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, FontAwesome5, FontAwesome6, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Dimensions, Image, Pressable, StatusBar, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -8,10 +8,10 @@ export default function HomeScreen() {
     const router = useRouter();
 
     const routes = [
-        { name: "Nuevo Reporte", icon: "clipboard-text", path: "/nuevo-reporte", iconSource: "mci" },
+        { name: "Reportes", icon: "clipboard-text", path: "/reports", iconSource: "mci" },
         { name: "Clientes", icon: "person", path: "/customers", iconSource: "ionic" },
-        { name: "Agregar equipo", icon: "users", path: "/agregar-equipo", iconSource: "fa5" },
-        { name: "Agregar material", icon: "file-document-edit", path: "/agregar-material", iconSource: "mci" },
+        { name: "Equipos", icon: "control", path: "/equipment", iconSource: "ant" },
+        { name: "Materiales", icon: "toolbox", path: "/materials", iconSource: "fa6" },
     ];
 
     return (
@@ -23,7 +23,7 @@ export default function HomeScreen() {
             {routes.map((route) => (
                 <Pressable key={route.name} style={styles.cardButton} onPress={() => router.push(route.path)}>
                     <View style={styles.cardButton__inner}>
-                        {route.iconSource === "mci" ? <MaterialCommunityIcons style={styles.cardButton__icon} size={22} name={route.icon} /> : route.iconSource === "ionic" ? <Ionicons style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : route.iconSource === "fa5" ? <FontAwesome5 style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : null}
+                        {route.iconSource === "mci" ? <MaterialCommunityIcons style={styles.cardButton__icon} size={22} name={route.icon} /> : route.iconSource === "ionic" ? <Ionicons style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : route.iconSource === "fa5" ? <FontAwesome5 style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : route.iconSource === "ant" ? <AntDesign style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : route.iconSource === "fa6" ? <FontAwesome6 style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : null}
                         <Text style={styles.cardButton__text}>{route.name}</Text>
                     </View>
                 </Pressable>
