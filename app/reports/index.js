@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { THEME } from "../theme/light.js";
 export default function ReportsScreen() {
     const router = useRouter();
     return (
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         height: 70,
-        backgroundColor: "#208edb",
+        backgroundColor: THEME.primary,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     },
 
     Button: {
-        backgroundColor: "#208edb",
+        backgroundColor: THEME.primary,
         minHeight: 48,
         paddingVertical: 12,
         marginTop: 10,

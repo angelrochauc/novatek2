@@ -2,10 +2,10 @@ import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import uuid from "react-native-uuid";
-import { Modal } from "react-native-web";
+import { THEME } from "./theme/light.js";
 
 export default function EquipmentScreen() {
     const router = useRouter();
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         height: 70,
-        backgroundColor: "#208edb",
+        backgroundColor: THEME.primary,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
         fontWeight: "600",
     },
     Button: {
-        backgroundColor: "#208edb",
+        backgroundColor: THEME.primary,
         minHeight: 48,
         paddingVertical: 12,
         marginTop: 10,
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         borderRadius: 6,
-        backgroundColor: "#208edb",
+        backgroundColor: THEME.primary,
         alignItems: "center",
         marginHorizontal: 5,
     },

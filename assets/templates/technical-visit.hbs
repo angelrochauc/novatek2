@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="background-color: #fff;">
+    {{!-- Header --}}
+    <table class="headerTable">
+    <tr>
+        <td rowspan="4" class="logoCell">
+            <img src="{{image}}" alt="Novatek Logo">    
+        </td>
+        <td class="titleCell" rowspan="4">FORMATO DE VISITA TÉCNICA</td>
+        <td style="color: #777;">CÓDIGO</td>
+        <td style="color: #777; text-align: center">{{code}}</td>
+    </tr>
+    <tr>        
+        <td style="color: #777;">VERSIÓN</td>
+        <td style="color: #777; text-align: center">1.0</td>
+    </tr>
+    <tr>        
+        <td style="color: #777;">FECHA</td>
+        <td style="color: #777; text-align: center">{{date.day}}/{{date.month}}/{{date.year}}</td>
+    </tr>
+    <tr>        
+        <td style="color: #777;">PÁGINA</td>
+        <td style="color: #777; text-align: center">1</td>
+    </tr>
+    </table>
+
+    {{!-- Customer --}}
+    <table class="customerTable">
+        <tr>
+            <td rowspan="2" style="width: 20vw; font-weight: 700;">NÚMERO DE REPORTE</td>
+            <td rowspan="2" style="width: 25vw;">{{reportNumber}}</td>
+            <td rowspan="2" style="width: 20vw; font-weight: 700;">FECHA</td>
+            <td style="font-weight: 700;">AAAA</td>
+            <td style="font-weight: 700;">MM</td>
+            <td style="font-weight: 700;">DD</td>
+        </tr>
+        <tr>
+            <td>{{date.year}}</td>
+            <td>{{date.month}}</td>
+            <td>{{date.day}}</td>
+        </tr>
+        <tr>
+            <td>Cliente</td>
+            <td>{{customer.name}}</td>
+            <td>Dirección</td>
+            <td colspan="3">{{customer.address}}</td>
+        </tr>
+        <tr>
+            <td>Teléfono</td>
+            <td>{{customer.phone}}</td>
+            <td>Responsable</td>
+            <td colspan="3">{{customer.contact}}</td>
+        </tr>
+    </table>
+
+    {{!-- Type --}}
+    <table class="typeTable">
+        <tr>
+            <td colspan="6">TIPO DE SOLICITUD</td>
+        </tr>
+        <tr>
+            <td style="width: 28vw; text-align:end">Visita de cotización</td>
+            <td style="width: 5.3vw;">
+                {{#if requestTypeIsCot}}✖{{/if}}
+            </td>
+            <td style="width: 28vw; text-align:end">Visita de cotización de mantenimiento</td>
+            <td style="width: 5.3vw;">
+                {{#if requestTypeIsMqt}}✖{{/if}}
+            </td>
+            <td style="width: 28vw; text-align:end">Diagnóstico</td>
+            <td style="width: 5.3vw;">
+                {{#if requestTypeIsDgn}}✖{{/if}}
+            </td>
+        </tr>
+    </table>
+
+    {{!-- Quantity --}}
+    <table class="quantityTable">
+        <tr>
+            <td>CANTIDAD DE SISTEMAS</td>
+            <td style="width: 5.3vw;">{{systemQuantity}}</td>
+        </tr>
+    </table>
+
+    {{!-- Info --}}
+    <table class="infoTable">
+        <tr>
+            <td colspan="2">INFORMACIÓN DEL SISTEMA</td>
+        </tr>
+        <tr>
+            <td style="width: 25vw;">Tipo de sistema</td>
+            <td>{{systemType}}</td>
+        </tr>
+        <tr>
+            <td style="width: 25vw;">Equipos a cotizar</td>
+            <td>{{equipmentQuoted}}</td>
+        </tr>
+        <tr>
+            <td style="width: 25vw;">Tipos de cableado</td>
+            <td>{{typesOfCabling}}</td>
+        </tr>
+        <tr>
+            <td style="width: 25vw;">Ductería</td>
+            <td>{{ductwork}}</td>
+        </tr>
+    </table>
+
+    {{!-- Initial status --}}
+    <table class="initialTable">
+        <tr>
+            <td colspan="8">ESTADO INICIAL DEL SISTEMA</td>
+        </tr>
+        <tr>
+            <td style="width: 17vw;">Funcional</td>
+            <td style="width: 5vw;">{{#if initialStatus.functional}}✖{{/if}}</td>
+            <td style="width: 17vw;">No enciende</td>
+            <td style="width: 5vw;">{{#if initialStatus.doesNotTurnOn}}✖{{/if}}</td>
+            <td style="width: 17vw;">Sin instalar</td>
+            <td style="width: 5vw;">{{#if initialStatus.notInstalled}}✖{{/if}}</td>
+            <td style="width: 17vw;">Otro. ¿Cuál?</td>
+            <td style="width: 17vw; text-align: start">{{#if initialStatus.other}} {{initialStatus.other}}{{/if}}</td>
+        </tr>
+    </table>
+
+    {{!-- Equipment --}}
+    <table class="equipmentTable">
+        <tr>
+            <td colspan="4">TABLA DE EQUIPOS</td>
+        </tr>
+        <tr>
+            <td style="width: 5vw;">N</td>
+            <td style="width: 40vw;">Descripción</td>
+            <td style="width: 10vw;">Cantidad</td>
+            <td style="width: 45vw;">Observaciones</td>
+        </tr>
+        {{#each equipment}}
+        <tr>
+            <td>{{n}}</td>
+            <td>{{description}}</td>
+            <td>{{quantity}}</td>
+            <td>{{observations}}</td>
+        </tr>
+        {{/each}}
+    </table>
+
+    {{!-- Material --}}
+    <table class="materialTable">
+        <tr>
+            <td>LISTA DE MATERIALES</td>
+        </tr>
+        <tr>
+            <td>{{#each materials}} {{this}}, {{/each}}</td>
+        </tr>
+    </table>
+
+    {{!-- Summary --}}
+    <table class="summaryTable">
+        <tr>
+            <td>RESUMEN DE VISITA</td>
+        </tr>
+        <tr>
+            <td>{{summary}}</td>
+        </tr>
+    </table>
+
+    {{!-- Images --}}
+    <table class="imageTable">
+        <tr>
+            <td colspan="4">ANEXO DE IMÁGENES</td>
+        </tr>
+        <tr>
+            <td style="width: 5vw;">N</td>
+            <td style="width: 95vw;">IMAGEN</td>
+        </tr>
+        {{#each images}}
+        <tr>
+            <td>{{n}}</td>
+            <td><img src="{{base64}}" alt="Image {{n}}"></td>
+        </tr>
+        {{/each}}
+    </table>
+
+    {{!-- Sign --}}
+    <table class="signTable">
+        <tr>
+            <td>Firma responsable del mantenimiento:</td>
+            <td>Firma responsable del equipo:</td>
+        </tr>
+        <tr>
+            <td style="height: 36px; vertical-align: bottom;">__________________________________________________</td>
+            <td style="height: 36px; vertical-align: bottom;">__________________________________________________</td>
+        </tr>
+        <tr>
+            <td>Nombre:</td>
+            <td>Nombre:</td>
+        </tr>
+        <tr>
+            <td>Cargo o empresa:</td>
+            <td>Cargo:</td>
+        </tr>
+    </table>
+</body>
+
+
+<style>
+    @page {
+        margin: 42px;
+    }
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        font-family: Arial, sans-serif;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        break-inside: avoid;
+    }
+    td {
+        font-size: 10px;
+        border: 1px solid #000;
+        padding: 1px 8px;
+        text-align: left;
+        vertical-align: top;
+    }
+    .headerTable {
+        margin: 12px 0;
+        td {
+            border: 1px solid #C0C0C0;
+        }
+        .titleCell {
+            text-align: center;
+            vertical-align: middle;
+            font-weight: 600;
+            width: 50vw;
+            font-size: 11px;
+            color: #303030;
+        }
+        .logoCell {
+            text-align: center;
+            vertical-align: middle;
+            width: 20vw;
+        }
+        .logoCell img {
+            width: 90%;
+        }
+    }
+
+    .customerTable {
+        margin: 12px 0;
+        color: #000;
+        td {
+            border: 1px solid #808080;
+            text-align: center;
+            font-size: 11px;
+            height: 18px;
+            vertical-align: middle;
+        }
+    }
+
+    .typeTable {
+        margin: 12px 0;
+        color: #000;
+        tr:first-child :first-child {
+            width: 16.66vw;
+            font-weight: 700;
+        }
+        td {
+            border: 1px solid #808080;
+            text-align: center;
+            font-size: 11px;
+            height: 18px;
+            vertical-align: middle;
+        }
+    }
+
+    .quantityTable {
+        width: 33.3vw;
+        margin: 0 auto;
+        color: #000;
+        td {
+            border: 1px solid #808080;
+            text-align: center;
+            font-size: 11px;
+            height: 18px;
+            vertical-align: middle;
+        }
+    }
+
+    .infoTable {
+        margin: 12px 0;
+        color: #000;
+        tr:first-child :first-child {
+            width: 50vw;
+            font-weight: 700;
+        }
+        td {
+            border: 1px solid #808080;
+            text-align: center;
+            font-size: 11px;
+            height: 18px;
+            vertical-align: middle;
+        }
+    }
+
+    .initialTable {
+        margin: 12px 0;
+        color: #000;
+        tr:first-child :first-child {
+            width: 100%;
+            font-weight: 700;
+        }
+        td {
+            border: 1px solid #808080;
+            text-align: center;
+            font-size: 11px;
+            height: 18px;
+            vertical-align: middle;
+        }
+    }
+
+    .equipmentTable, .imageTable {
+        margin: 12px 0;
+        color: #000;
+        tr:first-child, tr:nth-child(2) {
+            width: 100%;
+            font-weight: 700;
+        }
+        td {
+            border: 1px solid #808080;
+            text-align: center;
+            font-size: 11px;
+            height: 18px;
+            vertical-align: middle;
+            img {
+                max-width: 100%;
+                max-height: 100px;
+            }
+        }
+    }
+
+    .materialTable, .summaryTable {
+        margin: 12px 0;
+        color: #000;
+        tr:first-child td:first-child  {
+            width: 100%;
+            font-weight: 700;
+            text-align: center;
+            vertical-align: middle;
+        }
+        td {
+            border: 1px solid #808080;
+            font-size: 11px;
+            height: 18px;
+        }
+
+        tr:nth-child(2) td {
+            height: 100px;
+        }
+    }
+
+    .signTable {
+        margin: 24px 0 12px 0;
+        color: #000;
+        
+        tr:first-child td {
+            width: 50%;
+            font-weight: 600;
+            text-align: start;
+            vertical-align: middle;
+            font-size: 10px;
+        }
+        td {
+            border: none;
+            font-size: 10px;
+            vertical-align: middle;
+        }
+    }
+</style>
+</html>

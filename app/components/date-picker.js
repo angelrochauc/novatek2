@@ -2,8 +2,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { useState } from "react";
 import { Pressable, TextInput, View } from "react-native";
 
-export default function DateInput() {
-    const [date, setDate] = useState(new Date());
+export default function DateInput({ inputDate, onDateChange }) {
+    const [date, setDate] = useState(inputDate || new Date());
     const [showPicker, setShowPicker] = useState(false);
 
     const formattedDate = date
@@ -35,6 +35,7 @@ export default function DateInput() {
 
                         if (selectedDate) {
                             setDate(selectedDate);
+                            onDateChange?.(selectedDate);
                         }
                     }}
                 />

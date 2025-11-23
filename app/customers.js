@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Alert, Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import uuid from "react-native-uuid";
+import { THEME } from "./theme/light.js";
 
 export default function CustomerScreen() {
     useEffect(() => {
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         height: 70,
-        backgroundColor: "#208edb",
+        backgroundColor: THEME.primary,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",
@@ -232,12 +233,12 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         marginTop: 5,
         minHeight: 42,
-        outlineColor: "#208edb",
+        outlineColor: THEME.primary,
         placeholderTextColor: "#999",
     },
 
     Button: {
-        backgroundColor: "#208edb",
+        backgroundColor: THEME.primary,
         minHeight: 48,
         paddingVertical: 12,
         marginTop: 10,
@@ -279,7 +280,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         borderRadius: 6,
-        backgroundColor: "#208edb",
+        backgroundColor: THEME.primary,
         alignItems: "center",
         marginHorizontal: 5,
     },
