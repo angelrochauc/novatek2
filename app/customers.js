@@ -3,15 +3,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Alert, Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import uuid from "react-native-uuid";
-import { THEME } from "./theme/light.js";
+import THEME from "./theme/light.js";
 
 export default function CustomerScreen() {
     useEffect(() => {
         getCustomers();
     }, []);
     const router = useRouter();
+    const insets = useSafeAreaInsets();
 
     const getCustomers = async () => {
         try {
@@ -116,15 +117,19 @@ export default function CustomerScreen() {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { flex: 1 }]} edges={["top", "bottom"]}>
             <Modal visible={createCustomerModalVisible} animationType="slide" transparent={true}>
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>Agregar Nuevo Cliente</Text>
-                        <TextInput placeholder="Nombre" style={styles.input} value={name} onChangeText={setName} />
-                        <TextInput placeholder="Responsable" style={styles.input} value={contact} onChangeText={setContact} />
-                        <TextInput placeholder="Dirección" style={styles.input} value={address} onChangeText={setAddress} />
-                        <TextInput placeholder="Teléfono" style={styles.input} value={phone} onChangeText={setPhone} keyboardType="phone-pad" />
+                        <Text style={styles.label}>Nombre</Text>
+                        <TextInput style={styles.input} value={name} onChangeText={setName} />
+                        <Text style={styles.label}>Responsable</Text>
+                        <TextInput style={styles.input} value={contact} onChangeText={setContact} />
+                        <Text style={styles.label}>Dirección</Text>
+                        <TextInput style={styles.input} value={address} onChangeText={setAddress} />
+                        <Text style={styles.label}>Teléfono</Text>
+                        <TextInput style={styles.input} value={phone} onChangeText={setPhone} keyboardType="phone-pad" />
                         <View style={styles.modalButtons}>
                             <Pressable style={styles.modalButton} onPress={() => saveCustomer(false)}>
                                 <Text style={styles.modalButtonText}>Guardar</Text>
@@ -140,10 +145,14 @@ export default function CustomerScreen() {
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>Editar Cliente</Text>
-                        <TextInput placeholder="Nombre" style={styles.input} value={name} onChangeText={setName} />
-                        <TextInput placeholder="Responsable" style={styles.input} value={contact} onChangeText={setContact} />
-                        <TextInput placeholder="Dirección" style={styles.input} value={address} onChangeText={setAddress} />
-                        <TextInput placeholder="Teléfono" style={styles.input} value={phone} onChangeText={setPhone} keyboardType="phone-pad" />
+                        <Text style={styles.label}>Nombre</Text>
+                        <TextInput style={styles.input} value={name} onChangeText={setName} />
+                        <Text style={styles.label}>Responsable</Text>
+                        <TextInput style={styles.input} value={contact} onChangeText={setContact} />
+                        <Text style={styles.label}>Dirección</Text>
+                        <TextInput style={styles.input} value={address} onChangeText={setAddress} />
+                        <Text style={styles.label}>Teléfono</Text>
+                        <TextInput style={styles.input} value={phone} onChangeText={setPhone} keyboardType="phone-pad" />
                         <View style={styles.modalButtons}>
                             <Pressable style={styles.modalButton} onPress={() => saveCustomer(true)}>
                                 <Text style={styles.modalButtonText}>Guardar</Text>
@@ -160,7 +169,7 @@ export default function CustomerScreen() {
                     </View>
                 </View>
             </Modal>
-            <View style={styles.header}>
+            <View style={[styles.header, { paddingTop: insets.top + 15 }]}>
                 <Pressable onPress={() => router.push("/")} style={styles.backButton}>
                     <Ionicons name="arrow-back" size={26} color="#fff" />
                 </Pressable>
@@ -198,13 +207,12 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         right: 0,
-        height: 70,
+        paddingBottom: 15,
         backgroundColor: THEME.primary,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",
         paddingHorizontal: 20,
-        paddingTop: 15,
         zIndex: 10,
     },
     title: {
@@ -235,6 +243,14 @@ const styles = StyleSheet.create({
         minHeight: 42,
         outlineColor: THEME.primary,
         placeholderTextColor: "#999",
+    },
+
+    label: {
+        fontSize: 14,
+        fontWeight: "500",
+        marginTop: 10,
+        color: "#333",
+        marginBottom: -3,
     },
 
     Button: {

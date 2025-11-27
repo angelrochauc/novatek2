@@ -50,7 +50,7 @@ export default async function CompileReport({ reportTemplate, reportData, fileNa
         let FileSystem;
         try {
             FileSystem = require("expo-file-system/legacy");
-        } catch (e) {
+        } catch (_) {
             // si no existe el subpath, importo el módulo estándar (versión antigua)
             FileSystem = require("expo-file-system");
         }

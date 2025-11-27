@@ -1,11 +1,11 @@
 {
     "expo": {
-        "name": "NovatekClean",
-        "slug": "NovatekClean",
+        "name": "NovatekReports",
+        "slug": "NovatekReports",
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",
-        "scheme": "novatekclean",
+        "scheme": "novatekreports",
         "userInterfaceStyle": "automatic",
         "newArchEnabled": true,
         "ios": {
@@ -18,7 +18,7 @@
             },
             "edgeToEdgeEnabled": true,
             "predictiveBackGestureEnabled": false,
-            "package": "com.anonymous.NovatekClean"
+            "package": "com.anonymous.NovatekReports"
         },
         "web": {
             "output": "static",

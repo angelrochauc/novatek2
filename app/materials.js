@@ -3,13 +3,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Alert, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import uuid from "react-native-uuid";
-import { THEME } from "./theme/light.js";
+import THEME from "./theme/light.js";
 
 export default function MaterialsScreen() {
     const router = useRouter();
-
+    const insets = useSafeAreaInsets();
     useEffect(() => {
         getMaterialstList();
     }, []);
@@ -25,7 +25,6 @@ export default function MaterialsScreen() {
             const data = await AsyncStorage.getItem("materials");
             let savedMaterials = data ? JSON.parse(data) : [];
             setMaterialList(savedMaterials);
-            console.log(savedMaterials);
         } catch (error) {
             console.log(error);
             Alert.alert("Error", "No se pudo obtener la lista de materiales");
@@ -92,7 +91,7 @@ export default function MaterialsScreen() {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { flex: 1 }]} edges={["top", "bottom"]}>
             <Modal visible={createMaterialModalVisible} animationType="slide" transparent={true}>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.5)" }}>
                     <View style={{ width: "80%", backgroundColor: "#fff", borderRadius: 12, padding: 20 }}>
@@ -130,11 +129,11 @@ export default function MaterialsScreen() {
                     </View>
                 </View>
             </Modal>
-            <View style={styles.header}>
+            <View style={[styles.header, { paddingTop: insets.top + 15 }]}>
                 <Pressable onPress={() => router.push("/")} style={styles.backButton}>
                     <Ionicons name="arrow-back" size={26} color="#fff" />
                 </Pressable>
-                <Text style={styles.title}>Equipos</Text>
+                <Text style={styles.title}>Materiales</Text>
             </View>
 
             <ScrollView style={styles.ScrollView}>
@@ -172,7 +171,7 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         right: 0,
-        height: 70,
+        paddingBottom: 15,
         backgroundColor: THEME.primary,
         flexDirection: "row",
         alignItems: "center",

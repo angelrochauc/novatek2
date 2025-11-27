@@ -1,8 +1,9 @@
 import { FontAwesome } from "@expo/vector-icons";
+import * as FileSystem from "expo-file-system/legacy";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { ActivityIndicator, Alert, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { THEME } from "../theme/light.js";
+import THEME from "../theme/light.js";
 
 export default function ImagePickerComponent({ inputImages, maxImages = 5, onImagesChange }) {
     const [images, setImages] = useState(inputImages || []);
@@ -25,17 +26,29 @@ export default function ImagePickerComponent({ inputImages, maxImages = 5, onIma
         return true;
     };
 
-    const handleImageResult = (result) => {
+    const handleImageResult = async (result) => {
         if (!result.canceled && result.assets?.length > 0) {
-            const newImages = result.assets.map((asset) => ({
-                uri: asset.uri,
-                base64: asset.base64,
-                id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-            }));
+            const newImagesPromises = result.assets.map(async (asset) => {
+                try {
+                    const base64 = await FileSystem.readAsStringAsync(asset.uri, {
+                        encoding: "base64",
+                    });
 
+                    return {
+                        base64: base64,
+                        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                        uri: asset.uri,
+                    };
+                } catch (error) {
+                    console.error("Error generating base64:", error);
+                    return null;
+                }
+            });
+
+            const newImages = (await Promise.all(newImagesPromises)).filter((img) => img !== null);
             const updatedImages = [...images, ...newImages].slice(0, maxImages);
             setImages(updatedImages);
-            console.log("Selected Images: ", updatedImages);
+            console.log("Selected Images with base64: ", updatedImages);
             onImagesChange?.(updatedImages);
         }
     };
@@ -53,14 +66,15 @@ export default function ImagePickerComponent({ inputImages, maxImages = 5, onIma
         try {
             const result = await ImagePicker.launchCameraAsync({
                 mediaTypes: ["images"],
-                allowsEditing: true,
-                aspect: [4, 3],
-                quality: 0.8,
-                base64: true,
+                allowsEditing: false,
+                quality: 0.5,
+                base64: false,
+                exif: false,
             });
-            handleImageResult(result);
+            await handleImageResult(result);
         } catch (error) {
-            Alert.alert("Error", "Failed to take photo. Please try again.");
+            console.error("Camera error:", error);
+            Alert.alert("Error", `Failed to take photo: ${error.message}`);
         } finally {
             setLoading(false);
         }
@@ -83,9 +97,10 @@ export default function ImagePickerComponent({ inputImages, maxImages = 5, onIma
                 selectionLimit: maxImages - images.length,
                 allowsEditing: false,
                 quality: 0.8,
+                base64: true,
             });
-            handleImageResult(result);
-        } catch (error) {
+            await handleImageResult(result);
+        } catch (_) {
             Alert.alert("Error", "Failed to select images. Please try again.");
         } finally {
             setLoading(false);

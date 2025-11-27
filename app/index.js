@@ -1,4 +1,4 @@
-import { AntDesign, FontAwesome5, FontAwesome6, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, Entypo, FontAwesome5, FontAwesome6, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Dimensions, Image, Pressable, StatusBar, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,10 +12,12 @@ export default function HomeScreen() {
         { name: "Clientes", icon: "person", path: "/customers", iconSource: "ionic" },
         { name: "Equipos", icon: "control", path: "/equipment", iconSource: "ant" },
         { name: "Materiales", icon: "toolbox", path: "/materials", iconSource: "fa6" },
+        { name: "Ducterías", icon: "flow-line", path: "/ductwork", iconSource: "ent" },
+        { name: "Cableado", icon: "cable", path: "/wired", iconSource: "mat" },
     ];
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { flex: 1 }]} edges={["top", "bottom"]}>
             <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
             <View style={styles.logoCard}>
                 <Image source={require("../assets/logo3.png")} style={styles.logoImage} resizeMode="contain" />
@@ -23,7 +25,7 @@ export default function HomeScreen() {
             {routes.map((route) => (
                 <Pressable key={route.name} style={styles.cardButton} onPress={() => router.push(route.path)}>
                     <View style={styles.cardButton__inner}>
-                        {route.iconSource === "mci" ? <MaterialCommunityIcons style={styles.cardButton__icon} size={22} name={route.icon} /> : route.iconSource === "ionic" ? <Ionicons style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : route.iconSource === "fa5" ? <FontAwesome5 style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : route.iconSource === "ant" ? <AntDesign style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : route.iconSource === "fa6" ? <FontAwesome6 style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : null}
+                        {route.iconSource === "mci" ? <MaterialCommunityIcons style={styles.cardButton__icon} size={22} name={route.icon} /> : route.iconSource === "ionic" ? <Ionicons style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : route.iconSource === "fa5" ? <FontAwesome5 style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : route.iconSource === "ant" ? <AntDesign style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : route.iconSource === "fa6" ? <FontAwesome6 style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : route.iconSource === "ent" ? <Entypo style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : route.iconSource === "mat" ? <MaterialIcons style={styles.cardButton__icon} name={route.icon} size={22} color="#1E88E5" /> : null}
                         <Text style={styles.cardButton__text}>{route.name}</Text>
                     </View>
                 </Pressable>
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 70,
         overflow: "hidden",
-        backgroundColor: "#fefefe:",
+        backgroundColor: "#fefefe",
     },
 
     logoCard: {

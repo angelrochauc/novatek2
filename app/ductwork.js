@@ -7,122 +7,119 @@ import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
 import uuid from "react-native-uuid";
 import THEME from "./theme/light.js";
 
-export default function EquipmentScreen() {
+export default function DuctworkScreen() {
     const router = useRouter();
-
+    const insets = useSafeAreaInsets();
     useEffect(() => {
-        getEquipmentList();
+        getDuctworktList();
     }, []);
 
-    const insets = useSafeAreaInsets();
-
-    const [equipName, setEquipName] = useState("");
-    const [equipmentList, setEquipmentList] = useState([]);
-    const [createEquipmentModalVisible, setCreateEquipmentModalVisible] = useState(false);
-    const [editEquipmentModalVisible, setEditEquipmentModalVisible] = useState(false);
-    const [currentEditingEquipmentId, setCurrentEditingEquipmentId] = useState(null);
-
-    const getEquipmentList = async () => {
+    const [ductworkName, setDuctworkName] = useState("");
+    const [ductworkList, setDuctworkList] = useState([]);
+    const [createDuctworkModalVisible, setCreateDuctworkModalVisible] = useState(false);
+    const [editDuctworkModalVisible, setEditDuctworkModalVisible] = useState(false);
+    const [currentEditingDuctworkId, setCurrentEditingDuctworkId] = useState(null);
+    const getDuctworktList = async () => {
         try {
-            const data = await AsyncStorage.getItem("equipment");
-            let savedEquipment = data ? JSON.parse(data) : [];
-            setEquipmentList(savedEquipment);
+            const data = await AsyncStorage.getItem("ductwork");
+            let savedDuctwork = data ? JSON.parse(data) : [];
+            setDuctworkList(savedDuctwork);
         } catch (error) {
             console.log(error);
-            Alert.alert("Error", "No se pudo obtener la lista de equipos");
+            Alert.alert("Error", "No se pudo obtener la lista de ducterías");
         }
     };
 
-    const deleteEquipment = async (id) => {
+    const deleteDuctwork = async (id) => {
         try {
-            const data = await AsyncStorage.getItem("equipment");
-            let savedEquipment = data ? JSON.parse(data) : [];
-            savedEquipment = savedEquipment.filter((eq) => eq.id !== id);
-            await AsyncStorage.setItem("equipment", JSON.stringify(savedEquipment));
-            Alert.alert("Éxito", "Equipo eliminado correctamente");
-            setEquipmentList(savedEquipment);
-            setEditEquipmentModalVisible(false);
+            const data = await AsyncStorage.getItem("ductwork");
+            let savedDuctwork = data ? JSON.parse(data) : [];
+            savedDuctwork = savedDuctwork.filter((ductwork) => ductwork.id !== id);
+            await AsyncStorage.setItem("ductwork", JSON.stringify(savedDuctwork));
+            Alert.alert("Éxito", "Ductwork eliminado correctamente");
+            setDuctworkList(savedDuctwork);
+            setEditDuctworkModalVisible(false);
         } catch (error) {
             console.log(error);
-            Alert.alert("Error", "No se pudo eliminar el equipo");
+            Alert.alert("Error", "No se pudo eliminar la ductería");
         }
     };
 
-    const saveEquipment = async (edit) => {
-        if (!equipName.trim()) {
-            Alert.alert("Error", "El nombre del equipo es obligatorio");
+    const saveDuctwork = async (edit) => {
+        if (!ductworkName.trim()) {
+            Alert.alert("Error", "El nombre de la ductería es obligatorio");
             return;
         }
 
-        const newEquipment = {
-            id: edit ? currentEditingEquipmentId : uuid.v4(),
-            name: equipName,
+        const newDuctwork = {
+            id: edit ? currentEditingDuctworkId : uuid.v4(),
+            name: ductworkName,
         };
 
         try {
-            const data = await AsyncStorage.getItem("equipment");
-            const savedEquipment = data ? JSON.parse(data) : [];
+            const data = await AsyncStorage.getItem("ductwork");
+            const savedDuctwork = data ? JSON.parse(data) : [];
             if (edit) {
-                const index = savedEquipment.findIndex((eq) => eq.id === currentEditingEquipmentId);
+                const index = savedDuctwork.findIndex((mat) => mat.id === currentEditingDuctworkId);
                 if (index !== -1) {
-                    savedEquipment[index] = newEquipment;
+                    savedDuctwork[index] = newDuctwork;
                 }
             } else {
-                savedEquipment.push(newEquipment);
+                savedDuctwork.push(newDuctwork);
             }
-            await AsyncStorage.setItem("equipment", JSON.stringify(savedEquipment));
-            Alert.alert("Éxito", "Equipo guardado correctamente");
-            setEquipmentList(savedEquipment);
-            setCreateEquipmentModalVisible(false);
-            setEditEquipmentModalVisible(false);
-            setEquipName("");
+            await AsyncStorage.setItem("ductwork", JSON.stringify(savedDuctwork));
+            Alert.alert("Éxito", "Ductería guardada correctamente");
+            setDuctworkList(savedDuctwork);
+            setCreateDuctworkModalVisible(false);
+            setEditDuctworkModalVisible(false);
+            setDuctworkName("");
         } catch (error) {
             console.log(error);
-            Alert.alert("Error", "No se pudo guardar el equipo");
+            Alert.alert("Error", "No se pudo guardar la ductería");
         }
     };
 
     const cleanField = () => {
-        setEquipName("");
+        setDuctworkName("");
     };
 
-    const editEquipment = (equipment) => {
-        setEditEquipmentModalVisible(true);
-        setEquipName(equipment.name);
-        setCurrentEditingEquipmentId(equipment.id);
+    const editDuctwork = (ductwork) => {
+        setEditDuctworkModalVisible(true);
+        setDuctworkName(ductwork.name);
+        setCurrentEditingDuctworkId(ductwork.id);
     };
 
     return (
         <SafeAreaView style={[styles.container, { flex: 1 }]} edges={["top", "bottom"]}>
-            <Modal visible={createEquipmentModalVisible} animationType="slide" transparent={true}>
+            <Modal visible={createDuctworkModalVisible} animationType="slide" transparent={true}>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.5)" }}>
                     <View style={{ width: "80%", backgroundColor: "#fff", borderRadius: 12, padding: 20 }}>
-                        <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 12 }}>Agregar nuevo equipo</Text>
-                        <TextInput style={{ borderWidth: 1, borderColor: "#ccc", borderRadius: 8, padding: 10, marginBottom: 20, placeholderTextColor: "#999" }} placeholder="Nombre del equipo" value={equipName} onChangeText={setEquipName} />
+                        <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 12 }}>Agregar nuevo ductwork</Text>
+                        <TextInput style={{ borderWidth: 1, borderColor: "#ccc", borderRadius: 8, padding: 10, marginBottom: 20, placeholderTextColor: "#999" }} placeholder="Nombre del ductwork" value={ductworkName} onChangeText={setDuctworkName} />
                         <View style={styles.modalButtons}>
-                            <Pressable style={styles.modalButton} onPress={() => saveEquipment(false)}>
+                            <Pressable style={styles.modalButton} onPress={() => saveDuctwork(false)}>
                                 <Text style={styles.modalButtonText}>Guardar</Text>
                             </Pressable>
-                            <Pressable style={[styles.modalButton, styles.modalButtonCancel]} onPress={() => setCreateEquipmentModalVisible(false)}>
+                            <Pressable style={[styles.modalButton, styles.modalButtonCancel]} onPress={() => setCreateDuctworkModalVisible(false)}>
                                 <Text style={styles.modalButtonText}>Cancelar</Text>
                             </Pressable>
                         </View>
                     </View>
                 </View>
             </Modal>
-            <Modal visible={editEquipmentModalVisible} animationType="slide" transparent={true}>
+            <Modal visible={editDuctworkModalVisible} animationType="slide" transparent={true}>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.5)" }}>
                     <View style={{ width: "80%", backgroundColor: "#fff", borderRadius: 12, padding: 20 }}>
-                        <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 12 }}>Agregar nuevo equipo</Text>
-                        <TextInput style={{ borderWidth: 1, borderColor: "#ccc", borderRadius: 8, padding: 10, marginBottom: 20, placeholderTextColor: "#999" }} placeholder="Nombre del equipo" value={equipName} onChangeText={setEquipName} />
+                        <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 12 }}>Agregar nuevo ductwork</Text>
+                        <TextInput style={{ borderWidth: 1, borderColor: "#ccc", borderRadius: 8, padding: 10, marginBottom: 20, placeholderTextColor: "#999" }} placeholder="Nombre del ductwork" value={ductworkName} onChangeText={setDuctworkName} />
                         <View style={styles.modalButtons}>
-                            <Pressable style={styles.modalButton} onPress={() => saveEquipment(true)}>
+                            <Pressable style={styles.modalButton} onPress={() => saveDuctwork(true)}>
                                 <Text style={styles.modalButtonText}>Guardar</Text>
                             </Pressable>
-                            <Pressable style={[styles.modalButton, styles.modalButtonCancel]} onPress={() => setEditEquipmentModalVisible(false)}>
+                            <Pressable style={[styles.modalButton, styles.modalButtonCancel]} onPress={() => setEditDuctworkModalVisible(false)}>
                                 <Text style={styles.modalButtonText}>Cancelar</Text>
                             </Pressable>
-                            <Pressable style={[styles.modalButton, styles.modalButtonDelete]} onPress={() => deleteEquipment(currentEditingEquipmentId)}>
+                            <Pressable style={[styles.modalButton, styles.modalButtonDelete]} onPress={() => deleteDuctwork(currentEditingDuctworkId)}>
                                 <Text style={styles.modalButtonText}>
                                     <FontAwesome5 name="trash" size={20} color="#fff" />
                                 </Text>
@@ -135,7 +132,7 @@ export default function EquipmentScreen() {
                 <Pressable onPress={() => router.push("/")} style={styles.backButton}>
                     <Ionicons name="arrow-back" size={26} color="#fff" />
                 </Pressable>
-                <Text style={styles.title}>Equipos</Text>
+                <Text style={styles.title}>Ducterías</Text>
             </View>
 
             <ScrollView style={styles.ScrollView}>
@@ -143,15 +140,15 @@ export default function EquipmentScreen() {
                     style={styles.Button}
                     onPress={() => {
                         cleanField();
-                        setCreateEquipmentModalVisible(true);
+                        setCreateDuctworkModalVisible(true);
                     }}
                 >
-                    <Text style={styles.ButtonText}>Agregar nuevo equipo</Text>
+                    <Text style={styles.ButtonText}>Agregar nueva ductería</Text>
                 </Pressable>
-                {equipmentList.map((equipment) => (
-                    <Pressable key={equipment.id} style={styles.equipmentItem} onPress={() => editEquipment(equipment)}>
+                {ductworkList.map((ductwork) => (
+                    <Pressable key={ductwork.id} style={styles.materialItem} onPress={() => editDuctwork(ductwork)}>
                         <View>
-                            <Text style={{ fontSize: 17 }}>{equipment.name}</Text>
+                            <Text style={{ fontSize: 17 }}>{ductwork.name}</Text>
                         </View>
                     </Pressable>
                 ))}
@@ -179,6 +176,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "flex-start",
         paddingHorizontal: 20,
+        paddingTop: 15,
         zIndex: 10,
     },
     title: {
@@ -228,7 +226,7 @@ const styles = StyleSheet.create({
         flex: 0.4,
         backgroundColor: "#8b0707",
     },
-    equipmentItem: {
+    materialItem: {
         padding: 15,
         borderWidth: 1,
         borderRadius: 12,

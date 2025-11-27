@@ -1,13 +1,14 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { THEME } from "../theme/light.js";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import THEME from "../theme/light.js";
 export default function ReportsScreen() {
     const router = useRouter();
+    const insets = useSafeAreaInsets();
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
+        <SafeAreaView style={[styles.container, { flex: 1 }]} edges={["top", "bottom"]}>
+            <View style={[styles.header, { paddingTop: insets.top + 15 }]}>
                 <Pressable onPress={() => router.push("/")} style={styles.backButton}>
                     <Ionicons name="arrow-back" size={26} color="#fff" />
                 </Pressable>
@@ -17,10 +18,6 @@ export default function ReportsScreen() {
             <Pressable style={styles.Button} onPress={() => router.push("/reports/technical-visit")}>
                 <Text style={styles.ButtonText}>Crear nuevo Formato Visita Técnica</Text>
             </Pressable>
-
-            <Pressable style={styles.Button}>
-                <Text style={styles.ButtonText}>Ver todos los reportes</Text>
-            </Pressable>
         </SafeAreaView>
     );
 }
@@ -28,7 +25,7 @@ export default function ReportsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#ffffff",
+        backgroundColor: "#fefeff",
         paddingTop: 90,
         paddingHorizontal: 30,
     },
@@ -38,13 +35,12 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         right: 0,
-        height: 70,
+        paddingBottom: 15,
         backgroundColor: THEME.primary,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",
         paddingHorizontal: 20,
-        paddingTop: 15,
         zIndex: 10,
     },
 

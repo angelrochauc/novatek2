@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 export default async function getNextConsecutive(docConsecutiveKey) {
     try {
         const value = await AsyncStorage.getItem(docConsecutiveKey);
-        if (value !== null) {
+        if (isNaN(parseInt(value, 10))) {
             await AsyncStorage.setItem(docConsecutiveKey, "1");
             return 1;
         } else {
